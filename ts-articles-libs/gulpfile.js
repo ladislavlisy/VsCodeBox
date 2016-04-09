@@ -62,18 +62,9 @@ gulp.task("build", function(cb) {
 //******************************************************************************
 //* TEST
 //******************************************************************************
-gulp.task("istanbul:hook", function() {
-    return gulp.src(['library-code/**/*.js'])
-        // Covering files
-        .pipe(istanbul())
-        // Force `require` to return covered files
-        .pipe(istanbul.hookRequire());
-});
-
-gulp.task("test", ["istanbul:hook"], function() {
+gulp.task("test", ['build-test'], function() {
     return gulp.src('test-library-code/**/*.test.js')
-        .pipe(mocha({ui: 'bdd'}))
-        .pipe(istanbul.writeReports());
+        .pipe(mocha({ui: 'bdd', reporter: 'list'}));
 });
 
 //******************************************************************************

@@ -3,7 +3,9 @@
     "files.exclude": {
         "**/.git": true,
         "**/.DS_Store": true,
-        "library-code/**/*.js": true,
-        "test-library-code/**/*.js": true
+        "library-code/**/*.js": { "when": "$(basename).ts"},
+        "library-code/**/*.js.map": { "when": "$(basename).ts"},
+        "test-library-code/**/*.js": { "when": "$(basename).ts"},
+        "test-library-code/**/*.js.map": { "when": "$(basename).ts"}
     }
 }

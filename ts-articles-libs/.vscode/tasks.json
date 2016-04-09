@@ -66,6 +66,12 @@
             "args": [],
             "isBuildCommand": true,
             "problemMatcher": "$tsc"
+        },
+        {
+            "taskName": "test",
+            "args": [],
+            "isBuildCommand": true,
+            "problemMatcher": "$tsc"
         }
     ]
 }

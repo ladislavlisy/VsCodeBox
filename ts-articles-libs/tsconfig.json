@@ -17,6 +17,9 @@
       "suppressImplicitAnyIndexErrors": true
   },
   "exclude": [
+    "typings/main.d.ts",
+    "typings/main",
+    "typings/main/**/*.d.ts",
     "typings/browser.d.ts",
     "typings/browser",
     "node_modules"

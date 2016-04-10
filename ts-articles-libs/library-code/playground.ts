@@ -108,11 +108,25 @@ export class  Configure {
     public static EMPTY_PENDING_NAMES: Array<number> = [];
 
     public static PendingArticleNames1(code1: number): Array<number> {
-        return [code1];
+        return [ code1 ];
     }
 
     public static PendingArticleNames2(code1: number, code2: number): Array<number> {
-        return [code1, code2];
+        return [ code1, code2 ];
+    }
+
+    public static PendingArticleNames3(code1, code2, code3): Array<number> {
+        return [ code1, code2, code3 ];
+    }
+    public static PendingArticleNames4(code1, code2, code3, code4): Array<number> {
+        return [ code1, code2, code3, code4 ];
+    }
+    public static PendingArticleNames5(code1, code2, code3, code4, code5): Array<number> {
+        return [ code1, code2, code3, code4, code5 ];
+    }
+
+    public static PendingArticleNames9(code1, code2, code3, code4, code5, code6, code7, code8, code9): Array<number> {
+        return [ code1, code2, code3, code4, code5, code6, code7, code8, code9 ];
     }
 
     public static ConfigureContractTermArticles(): Array<Article> {
@@ -124,6 +138,316 @@ export class  Configure {
             new Article(ConfigArticleCode.ARTICLE_POSITION_EMPL_TERM, configCategory,
                 this.PendingArticleNames1(
                     ConfigArticleCode.ARTICLE_CONTRACT_EMPL_TERM)),
+        ];
+        return articleArray;
+    }
+
+    public static ConfigurePositionTimeArticles(): Array<Article> {
+        const configCategory = ProcessCategory.CATEGORY_TIMES;
+
+        let articleArray: Array<Article> = [
+            new Article(ConfigArticleCode.ARTICLE_SCHEDULE_WORK, configCategory,
+                this.PendingArticleNames1(
+                    ConfigArticleCode.ARTICLE_POSITION_EMPL_TERM
+                )),
+            new Article(ConfigArticleCode.ARTICLE_TIMESHEET_SCHEDULE, configCategory,
+                this.PendingArticleNames1(
+                    ConfigArticleCode.ARTICLE_SCHEDULE_WORK
+                )),
+            new Article(ConfigArticleCode.ARTICLE_TIMESHEET_WORKING, configCategory,
+                this.PendingArticleNames2(
+                    ConfigArticleCode.ARTICLE_TIMESHEET_SCHEDULE,
+                    ConfigArticleCode.ARTICLE_POSITION_EMPL_TERM
+                )),
+            new Article(ConfigArticleCode.ARTICLE_TIMESHEET_ABSENCE, configCategory,
+                this.PendingArticleNames1(
+                    ConfigArticleCode.ARTICLE_TIMESHEET_WORKING
+                )),
+            new Article(ConfigArticleCode.ARTICLE_TIMEHOURS_WORKING, configCategory,
+                this.PendingArticleNames1(
+                    ConfigArticleCode.ARTICLE_TIMESHEET_WORKING
+                )),
+            new Article(ConfigArticleCode.ARTICLE_TIMEHOURS_ABSENCE, configCategory,
+                this.PendingArticleNames1(
+                    ConfigArticleCode.ARTICLE_TIMESHEET_ABSENCE
+                )),
+        ];
+        return articleArray;
+    }
+
+    public static ConfigureGrossIncomeArticles(): Array<Article> {
+        const configCategory = ProcessCategory.CATEGORY_AMOUNT;
+
+        let articleArray: Array<Article> = [
+            new Article(ConfigArticleCode.ARTICLE_SALARY_BASE, configCategory,
+                this.PendingArticleNames2(
+                    ConfigArticleCode.ARTICLE_TIMEHOURS_WORKING,
+                    ConfigArticleCode.ARTICLE_TIMEHOURS_ABSENCE
+                )),
+        ];
+        return articleArray;
+    }
+
+    public static ConfigureTotalIncomeArticles(): Array<Article> {
+        const configCategory = ProcessCategory.CATEGORY_FINAL;
+
+        let articleArray: Array<Article> = [
+            new Article(ConfigArticleCode.ARTICLE_INCOME_GROSS, configCategory,
+                this.EMPTY_PENDING_NAMES),
+            new Article(ConfigArticleCode.ARTICLE_INCOME_NETTO, configCategory,
+                this.PendingArticleNames9(
+                    ConfigArticleCode.ARTICLE_INCOME_GROSS,
+                    ConfigArticleCode.ARTICLE_TAXING_ADVANCES_TOTAL,
+                    ConfigArticleCode.ARTICLE_TAXING_BONUS_CHILD,
+                    ConfigArticleCode.ARTICLE_TAXING_WITHHOLD_GENERAL,
+                    ConfigArticleCode.ARTICLE_HEALTH_EMPLOYEE_GENERAL,
+                    ConfigArticleCode.ARTICLE_HEALTH_EMPLOYEE_MANDATORY,
+                    ConfigArticleCode.ARTICLE_SOCIAL_EMPLOYEE_GENERAL,
+                    ConfigArticleCode.ARTICLE_SOCIAL_EMPLOYEE_PENSION,
+                    ConfigArticleCode.ARTICLE_GARANT_EMPLOYEE_PENSION
+                )),
+        ];
+        return articleArray;
+    }
+
+    public static ConfigureNettoDeductsArticles(): Array<Article> {
+        const configCategory = ProcessCategory.CATEGORY_NETTO;
+
+        let articleArray: Array<Article> = [
+            new Article(ConfigArticleCode.ARTICLE_TAXING_ADVANCES_TOTAL, configCategory,
+                this.PendingArticleNames2(
+                    ConfigArticleCode.ARTICLE_TAXING_ADVANCES_GENERAL,
+                    ConfigArticleCode.ARTICLE_TAXING_ADVANCES_SOLIDARY
+                )),
+            new Article(ConfigArticleCode.ARTICLE_TAXING_ADVANCES_GENERAL, configCategory,
+                this.PendingArticleNames1(
+                    ConfigArticleCode.ARTICLE_TAXING_ADVANCES_BASIS_GENERAL
+                )),
+            new Article(ConfigArticleCode.ARTICLE_TAXING_ADVANCES_SOLIDARY, configCategory,
+                this.PendingArticleNames1(
+                    ConfigArticleCode.ARTICLE_TAXING_ADVANCES_BASIS_SOLIDARY
+                )),
+            new Article(ConfigArticleCode.ARTICLE_TAXING_WITHHOLD_GENERAL, configCategory,
+                this.PendingArticleNames1(
+                    ConfigArticleCode.ARTICLE_TAXING_WITHHOLD_BASIS_GENERAL
+                )),
+            new Article(ConfigArticleCode.ARTICLE_HEALTH_EMPLOYEE_GENERAL, configCategory,
+                this.PendingArticleNames1(
+                    ConfigArticleCode.ARTICLE_HEALTH_BASIS_GENERAL
+                )),
+            new Article(ConfigArticleCode.ARTICLE_HEALTH_EMPLOYEE_MANDATORY, configCategory,
+                this.PendingArticleNames1(
+                    ConfigArticleCode.ARTICLE_HEALTH_BASIS_MANDATORY
+                )),
+            new Article(ConfigArticleCode.ARTICLE_SOCIAL_EMPLOYEE_GENERAL, configCategory,
+                this.PendingArticleNames1(
+                    ConfigArticleCode.ARTICLE_SOCIAL_BASIS_GENERAL
+                )),
+            new Article(ConfigArticleCode.ARTICLE_SOCIAL_EMPLOYEE_PENSION, configCategory,
+                this.PendingArticleNames1(
+                    ConfigArticleCode.ARTICLE_SOCIAL_BASIS_PENSION
+                )),
+            new Article(ConfigArticleCode.ARTICLE_GARANT_EMPLOYEE_PENSION, configCategory,
+                this.PendingArticleNames1(
+                    ConfigArticleCode.ARTICLE_GARANT_BASIS_PENSION
+                )),
+        ];
+        return articleArray;
+    }
+
+    public static ConfigureBasisHealthArticles(): Array<Article> {
+        const configCategory = ProcessCategory.CATEGORY_NETTO;
+
+        let articleArray: Array<Article> = [
+            new Article(ConfigArticleCode.ARTICLE_HEALTH_INCOME_SUBJECT, configCategory,
+                this.EMPTY_PENDING_NAMES),
+            new Article(ConfigArticleCode.ARTICLE_HEALTH_INCOME_PARTICIP, configCategory,
+                this.PendingArticleNames1(
+                    ConfigArticleCode.ARTICLE_HEALTH_INCOME_SUBJECT
+                )),
+            new Article(ConfigArticleCode.ARTICLE_HEALTH_BASIS_GENERAL, configCategory,
+                this.PendingArticleNames1(
+                    ConfigArticleCode.ARTICLE_HEALTH_INCOME_PARTICIP
+                )),
+            new Article(ConfigArticleCode.ARTICLE_HEALTH_BASIS_MANDATORY, configCategory,
+                this.PendingArticleNames2(
+                    ConfigArticleCode.ARTICLE_HEALTH_BASIS_GENERAL,
+                    ConfigArticleCode.ARTICLE_HEALTH_INCOME_PARTICIP
+                )),
+            new Article(ConfigArticleCode.ARTICLE_HEALTH_BASIS_LEGALCAP, configCategory,
+                this.PendingArticleNames2(
+                    ConfigArticleCode.ARTICLE_HEALTH_BASIS_GENERAL,
+                    ConfigArticleCode.ARTICLE_HEALTH_INCOME_PARTICIP
+                )),
+        ];
+        return articleArray;
+    }
+
+    public static ConfigureBasisSocialArticles(): Array<Article> {
+        const configCategory = ProcessCategory.CATEGORY_NETTO;
+
+        let articleArray: Array<Article> = [
+            new Article(ConfigArticleCode.ARTICLE_SOCIAL_INCOME_SUBJECT, configCategory,
+                this.EMPTY_PENDING_NAMES),
+            new Article(ConfigArticleCode.ARTICLE_SOCIAL_INCOME_PARTICIP, configCategory,
+                this.PendingArticleNames1(
+                    ConfigArticleCode.ARTICLE_SOCIAL_INCOME_SUBJECT
+                )),
+            new Article(ConfigArticleCode.ARTICLE_SOCIAL_BASIS_GENERAL, configCategory,
+                this.PendingArticleNames1(
+                    ConfigArticleCode.ARTICLE_SOCIAL_INCOME_PARTICIP
+                )),
+            new Article(ConfigArticleCode.ARTICLE_SOCIAL_BASIS_PENSION, configCategory,
+                this.PendingArticleNames1(
+                    ConfigArticleCode.ARTICLE_SOCIAL_INCOME_PARTICIP
+                )),
+            new Article(ConfigArticleCode.ARTICLE_SOCIAL_BASIS_LEGALCAP, configCategory,
+                this.PendingArticleNames1(
+                    ConfigArticleCode.ARTICLE_SOCIAL_INCOME_PARTICIP
+                )),
+        ];
+        return articleArray;
+    }
+
+    public static ConfigureBasisGarantArticles(): Array<Article> {
+        const configCategory = ProcessCategory.CATEGORY_NETTO;
+
+        let articleArray: Array<Article> = [
+            new Article(ConfigArticleCode.ARTICLE_GARANT_INCOME_SUBJECT, configCategory,
+                this.EMPTY_PENDING_NAMES),
+            new Article(ConfigArticleCode.ARTICLE_GARANT_INCOME_PARTICIP, configCategory,
+                this.PendingArticleNames1(
+                    ConfigArticleCode.ARTICLE_GARANT_INCOME_SUBJECT
+                )),
+            new Article(ConfigArticleCode.ARTICLE_GARANT_BASIS_PENSION, configCategory,
+                this.PendingArticleNames1(
+                    ConfigArticleCode.ARTICLE_GARANT_INCOME_PARTICIP
+                )),
+            new Article(ConfigArticleCode.ARTICLE_GARANT_BASIS_LEGALCAP, configCategory,
+                this.PendingArticleNames1(
+                    ConfigArticleCode.ARTICLE_GARANT_INCOME_PARTICIP
+                )),
+        ];
+        return articleArray;
+    }
+
+    public static ConfigureBasisTaxingArticles(): Array<Article> {
+        const configCategory = ProcessCategory.CATEGORY_NETTO;
+
+        let articleArray: Array<Article> = [
+            new Article(ConfigArticleCode.ARTICLE_TAXING_INCOME_SUBJECT, configCategory,
+                this.EMPTY_PENDING_NAMES),
+            new Article(ConfigArticleCode.ARTICLE_TAXING_INCOME_HEALTH, configCategory,
+                this.EMPTY_PENDING_NAMES),
+            new Article(ConfigArticleCode.ARTICLE_TAXING_INCOME_SOCIAL, configCategory,
+                this.EMPTY_PENDING_NAMES),
+        ];
+        return articleArray;
+    }
+
+    public static ConfigureBasisAdvancesArticles(): Array<Article> {
+        const configCategory = ProcessCategory.CATEGORY_NETTO;
+
+        let articleArray: Array<Article> = [
+            new Article(ConfigArticleCode.ARTICLE_TAXING_ADVANCES_INCOME, configCategory,
+                this.PendingArticleNames1(
+                    ConfigArticleCode.ARTICLE_TAXING_INCOME_SUBJECT
+                )),
+            new Article(ConfigArticleCode.ARTICLE_TAXING_ADVANCES_HEALTH, configCategory,
+                this.PendingArticleNames1(
+                    ConfigArticleCode.ARTICLE_TAXING_INCOME_HEALTH
+                )),
+            new Article(ConfigArticleCode.ARTICLE_TAXING_ADVANCES_SOCIAL, configCategory,
+                this.PendingArticleNames1(
+                    ConfigArticleCode.ARTICLE_TAXING_INCOME_SOCIAL
+                )),
+            new Article(ConfigArticleCode.ARTICLE_TAXING_ADVANCES_BASIS_GENERAL, configCategory,
+                this.PendingArticleNames3(
+                    ConfigArticleCode.ARTICLE_TAXING_ADVANCES_INCOME,
+                    ConfigArticleCode.ARTICLE_TAXING_ADVANCES_HEALTH,
+                    ConfigArticleCode.ARTICLE_TAXING_ADVANCES_SOCIAL
+                )),
+            new Article(ConfigArticleCode.ARTICLE_TAXING_ADVANCES_BASIS_SOLIDARY, configCategory,
+                this.PendingArticleNames1(
+                    ConfigArticleCode.ARTICLE_TAXING_ADVANCES_BASIS_GENERAL
+                )),
+        ];
+        return articleArray;
+    }
+
+    public static ConfigureBasisWithholdArticles(): Array<Article> {
+        const configCategory = ProcessCategory.CATEGORY_NETTO;
+
+        let articleArray: Array<Article> = [
+            new Article(ConfigArticleCode.ARTICLE_TAXING_WITHHOLD_INCOME, configCategory,
+                this.PendingArticleNames1(
+                    ConfigArticleCode.ARTICLE_TAXING_INCOME_SUBJECT
+                )),
+            new Article(ConfigArticleCode.ARTICLE_TAXING_WITHHOLD_HEALTH, configCategory,
+                this.PendingArticleNames1(
+                    ConfigArticleCode.ARTICLE_TAXING_INCOME_HEALTH
+                )),
+            new Article(ConfigArticleCode.ARTICLE_TAXING_WITHHOLD_SOCIAL, configCategory,
+                this.PendingArticleNames1(
+                    ConfigArticleCode.ARTICLE_TAXING_INCOME_SOCIAL
+                )),
+            new Article(ConfigArticleCode.ARTICLE_TAXING_WITHHOLD_BASIS_GENERAL, configCategory,
+                this.PendingArticleNames3(
+                    ConfigArticleCode.ARTICLE_TAXING_WITHHOLD_INCOME,
+                    ConfigArticleCode.ARTICLE_TAXING_WITHHOLD_HEALTH,
+                    ConfigArticleCode.ARTICLE_TAXING_WITHHOLD_SOCIAL
+                )),
+        ];
+        return articleArray;
+    }
+
+    public static ConfigureAllowanceTaxisArticles(): Array<Article> {
+        const configCategory = ProcessCategory.CATEGORY_NETTO;
+
+        let articleArray: Array<Article> = [
+            new Article(ConfigArticleCode.ARTICLE_TAXING_ALLOWANCE_PAYER, configCategory,
+                this.PendingArticleNames1(
+                    ConfigArticleCode.ARTICLE_TAXING_ADVANCES_INCOME
+                )),
+            new Article(ConfigArticleCode.ARTICLE_TAXING_ALLOWANCE_DISABILITY, configCategory,
+                this.PendingArticleNames1(
+                    ConfigArticleCode.ARTICLE_TAXING_ADVANCES_INCOME
+                )),
+            new Article(ConfigArticleCode.ARTICLE_TAXING_ALLOWANCE_STUDYING, configCategory,
+                this.PendingArticleNames1(
+                    ConfigArticleCode.ARTICLE_TAXING_ADVANCES_INCOME
+                )),
+            new Article(ConfigArticleCode.ARTICLE_TAXING_ALLOWANCE_CHILD, configCategory,
+                this.PendingArticleNames1(
+                    ConfigArticleCode.ARTICLE_TAXING_ADVANCES_INCOME
+                )),
+        ];
+        return articleArray;
+    }
+
+    public static ConfigureRebateTaxisArticles(): Array<Article> {
+        const configCategory = ProcessCategory.CATEGORY_NETTO;
+
+        let articleArray: Array<Article> = [
+            new Article(ConfigArticleCode.ARTICLE_TAXING_REBATE_PAYER, configCategory,
+                this.PendingArticleNames4(
+                    ConfigArticleCode.ARTICLE_TAXING_ALLOWANCE_PAYER,
+                    ConfigArticleCode.ARTICLE_TAXING_ADVANCES_TOTAL,
+                    ConfigArticleCode.ARTICLE_TAXING_ALLOWANCE_DISABILITY,
+                    ConfigArticleCode.ARTICLE_TAXING_ALLOWANCE_STUDYING
+                )),
+            new Article(ConfigArticleCode.ARTICLE_TAXING_REBATE_CHILD, configCategory,
+                this.PendingArticleNames3(
+                    ConfigArticleCode.ARTICLE_TAXING_ALLOWANCE_CHILD,
+                    ConfigArticleCode.ARTICLE_TAXING_ADVANCES_TOTAL,
+                    ConfigArticleCode.ARTICLE_TAXING_REBATE_PAYER
+                )),
+            new Article(ConfigArticleCode.ARTICLE_TAXING_BONUS_CHILD, configCategory,
+                this.PendingArticleNames3(
+                    ConfigArticleCode.ARTICLE_TAXING_ADVANCES_TOTAL,
+                    ConfigArticleCode.ARTICLE_TAXING_REBATE_PAYER,
+                    ConfigArticleCode.ARTICLE_TAXING_REBATE_CHILD
+                )),
         ];
         return articleArray;
     }
